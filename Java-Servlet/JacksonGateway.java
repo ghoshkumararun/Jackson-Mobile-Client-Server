@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Does not support passing of primitives as parameters to the methods that are
  * called
+ * 
+ * NOTE: classes called through this servlet should have a constructor that takes
+ * a HttpServletRequest as a parameter
  *
  * @author Matt Roth
  */
