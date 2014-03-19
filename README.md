@@ -23,3 +23,5 @@ Download from https://hc.apache.org/downloads.cgi
 
 ###### Planned updates
 * Put Java servlet in a library with a xml config file
+* Test Java servlet in working webapp
+* Test Android client in workign webapp
