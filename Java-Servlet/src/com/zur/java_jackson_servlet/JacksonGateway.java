@@ -1,3 +1,5 @@
+package com.zur.java_jackson_servlet;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

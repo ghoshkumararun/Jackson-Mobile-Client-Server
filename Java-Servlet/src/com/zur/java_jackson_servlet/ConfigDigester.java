@@ -1,7 +1,9 @@
+package com.zur.java_jackson_servlet;
+
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
 
 /*
