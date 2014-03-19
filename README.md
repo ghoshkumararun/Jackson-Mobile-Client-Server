@@ -20,3 +20,6 @@ You will need for Android Client
 * commons-codec-1.8.jar
   
 Download from https://hc.apache.org/downloads.cgi
+
+###### Planned updates
+* Put Java servlet in a library with a xml config file
