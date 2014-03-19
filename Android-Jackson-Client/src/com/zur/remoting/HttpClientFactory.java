@@ -10,7 +10,7 @@ import org.apache.http.params.HttpParams;
 
 /**
  * Keeps same session id by only creating a httpclient once
- * @author Carl
+ * @author Matt Roth
  *
  */
 public class HttpClientFactory {
