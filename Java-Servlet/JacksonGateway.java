@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class JacksonGateway extends HttpServlet {
 
-    private static final String SERVER_VO_PACKAGE = "com.tsr.remoting.valueobjects";
-    private static final String ANDROID_VO_PACKAGE = "com.tsr.remoting.valueobjects";
-    private static final String VO_CLASS = "vo_class";
+    private static final String SERVER_JAVABEAN_POJO_PACKAGE = "com.tsr.remoting.valueobjects";
+    private static final String CLIENT_JAVABEAN_POJO_PACKAGE = "com.tsr.remoting.valueobjects";
+    private static final String JAVABEAN_POJO_CLASS = "javabean_pojo_class";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -88,7 +88,7 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts all VOs in the obj down every level from LinkedHashMaps to VOs
+     * Converts all JAVABEAN_POJOs in the obj down every level from LinkedHashMaps to JAVABEAN_POJOs
      *
      * @param obj
      * @return
@@ -99,9 +99,9 @@ public class JacksonGateway extends HttpServlet {
     public Object unparseObjectFromJSON(Object obj) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         if (obj != null) {
-            if (obj instanceof LinkedHashMap && ((LinkedHashMap) obj).get(VO_CLASS) != null) {
+            if (obj instanceof LinkedHashMap && ((LinkedHashMap) obj).get(JAVABEAN_POJO_CLASS) != null) {
 
-                return convertLinkedHashMapsToVO((LinkedHashMap) obj);
+                return convertLinkedHashMapsToJAVABEAN_POJO((LinkedHashMap) obj);
 
             } else if (obj instanceof List) {
 
@@ -126,10 +126,10 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts LinkedHashMaps to VOs in the package SERVER_VO_PACKAGE when they
-     * come for the android app and have the key/value pair for VO_CLASS
+     * Converts LinkedHashMaps to JAVABEAN_POJOs in the package SERVER_JAVABEAN_POJO_PACKAGE when they
+     * come for the client and have the key/value pair for JAVABEAN_POJO_CLASS
      *
-     * Checks the values to see if they might be of type Map,List or a VO and
+     * Checks the values to see if they might be of type Map,List or a JAVABEAN_POJO and
      * then converts
      *
      * @param lhm
@@ -138,12 +138,12 @@ public class JacksonGateway extends HttpServlet {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private Object convertLinkedHashMapsToVO(LinkedHashMap lhm) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private Object convertLinkedHashMapsToJAVABEAN_POJO(LinkedHashMap lhm) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         if (lhm != null) {
-            if (lhm.get(VO_CLASS) != null) {
-                Class<?> vo = Class.forName(lhm.get(VO_CLASS).toString().replaceAll(ANDROID_VO_PACKAGE + ".", SERVER_VO_PACKAGE + "."));
-                Object theVO = vo.newInstance();
-                Field[] theFields = vo.getDeclaredFields();
+            if (lhm.get(JAVABEAN_POJO_CLASS) != null) {
+                Class<?> javaBeanPojo = Class.forName(lhm.get(JAVABEAN_POJO_CLASS).toString().replaceAll(CLIENT_JAVABEAN_POJO_PACKAGE + ".", SERVER_JAVABEAN_POJO_PACKAGE + "."));
+                Object theJavaBeanPojo = javaBeanPojo.newInstance();
+                Field[] theFields = javaBeanPojo.getDeclaredFields();
                 for (Field theField : theFields) {
                     String fieldKey = theField.getName();
                     Object fieldValue = lhm.get(fieldKey);
@@ -159,22 +159,22 @@ public class JacksonGateway extends HttpServlet {
 
                             setterArgTypes[0] = fieldValue.getClass();
 
-                            Method m = vo.getDeclaredMethod(setter, setterArgTypes);
-                            m.invoke(theVO, setterArgs);
+                            Method m = javaBeanPojo.getDeclaredMethod(setter, setterArgTypes);
+                            m.invoke(theJavaBeanPojo, setterArgs);
 
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         setterArgTypes[0] = Object.class;
                         try {
-                            Method m = vo.getDeclaredMethod(setter, setterArgTypes);
-                            m.invoke(theVO, setterArgs);
+                            Method m = javaBeanPojo.getDeclaredMethod(setter, setterArgTypes);
+                            m.invoke(theJavaBeanPojo, setterArgs);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     }
                 }
-                return theVO;
+                return theJavaBeanPojo;
             } else {
                 return lhm;
             }
@@ -184,19 +184,19 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Convert all VOs all the way down every level to LinkedHashMaps with
-     * custom field to determine what VO it is
+     * Convert all JAVABEAN_POJOs all the way down every level to LinkedHashMaps with
+     * custom field to determine what JAVABEAN_POJO it is
      *
      * @param obj
      * @return
      */
     private Object parseObjectForJSON(Object obj) {
         if (obj != null) {
-            boolean isVO = Package.getPackage(SERVER_VO_PACKAGE).equals(obj.getClass().getPackage());
+            boolean isJavaBeanPojo = Package.getPackage(SERVER_JAVABEAN_POJO_PACKAGE).equals(obj.getClass().getPackage());
 
-            if (isVO) {
+            if (isJavaBeanPojo) {
 
-                return convertVOtoLinkedHashMap(obj);
+                return convertJAVABEAN_POJOtoLinkedHashMap(obj);
 
             } else if (obj instanceof List) {
 
@@ -225,17 +225,17 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts VOs to LinkedHashMaps before they go to the Android app and
-     * checks VO values to see if they need to be converted
+     * Converts JAVABEAN_POJOs to LinkedHashMaps before they go to the Android app and
+     * checks JAVABEAN_POJO values to see if they need to be converted
      *
      * @param obj
      * @return
      */
-    private Object convertVOtoLinkedHashMap(Object obj) {
+    private Object convertJAVABEAN_POJOtoLinkedHashMap(Object obj) {
         if (obj != null) {
-            boolean isVO = Package.getPackage(SERVER_VO_PACKAGE).equals(obj.getClass().getPackage());
+            boolean isJavaBeanPojo = Package.getPackage(SERVER_JAVABEAN_POJO_PACKAGE).equals(obj.getClass().getPackage());
 
-            if (isVO) {
+            if (isJavaBeanPojo) {
 
                 LinkedHashMap lhm = new LinkedHashMap();
                 Field[] theFields = obj.getClass().getDeclaredFields();
@@ -253,7 +253,7 @@ public class JacksonGateway extends HttpServlet {
                     }
                 }
 
-                lhm.put(VO_CLASS, obj.getClass());
+                lhm.put(JAVABEAN_POJO_CLASS, obj.getClass());
                 return lhm;
 
             } else {
