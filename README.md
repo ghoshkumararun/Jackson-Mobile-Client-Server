@@ -2,6 +2,7 @@ Jackson-Mobile-Client-Server
 ============================
 
 Provides a client for a Jackson Android client that can communicate with a Jackson Java servlet.
+The client maintains the session with Java Servlet.
 
 It handles JavaBean POJOs and will go into Maps and Lists and convert JavaBean POJOs in those as well.
 
