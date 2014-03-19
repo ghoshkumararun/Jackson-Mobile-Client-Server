@@ -118,7 +118,7 @@ public class JacksonRemotingCall extends AsyncTask {
 	 * @param method
 	 * @param params
 	 */
-	protected JacksonRemotingCall(JacksonRemotingCallListener caller, String theClass, String method, ArrayList params) {
+	public JacksonRemotingCall(JacksonRemotingCallListener caller, String theClass, String method, ArrayList params) {
 		this.caller = caller;
 		this.theClass = theClass;
 		this.method = method;
