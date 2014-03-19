@@ -88,25 +88,25 @@ public class JacksonRemotingCall extends AsyncTask {
 		}
 	}
 
-	private static String urlForGateway()
+	protected static String urlForGateway()
 	{
 		return "";
 	}
 
 	// Error messages
-	private static final String DEBUG_TAG = "HttpExample";
-	private static final String NETWORK_INFO_ERROR = "NetworkInfo is either null or connectivity doesn't exist.";
-	private static final String INVALID_URL = "Unable to connect to server.";
-	private static final String NETWORK_ERROR = "Network error Response value is ";
+	protected static final String DEBUG_TAG = "JacksonClient";
+	protected static final String NETWORK_INFO_ERROR = "NetworkInfo is either null or connectivity doesn't exist.";
+	protected static final String INVALID_URL = "Unable to connect to server.";
+	protected static final String NETWORK_ERROR = "Network error Response value is ";
 	public static String remotingCallException = "REMOTINGCALLEXCEPTION";
 	public static String remotingCallError = "REMOTINGCALLERROR";
 	public static String remotingCallerNull = "REMOTINGCALLERNULL";
 	public static String CALLER_NULL_ERROR = "JacksonRemotingCallListener is null";
 
-	private String method;
-	private String theClass;
-	private ArrayList params;
-	private JacksonRemotingCallListener caller;
+	protected String method;
+	protected String theClass;
+	protected ArrayList params;
+	protected JacksonRemotingCallListener caller;
 
 	/**
 	 * Constructor for which takes the current activity which must implement
@@ -118,7 +118,7 @@ public class JacksonRemotingCall extends AsyncTask {
 	 * @param method
 	 * @param params
 	 */
-	private JacksonRemotingCall(JacksonRemotingCallListener caller, String theClass, String method, ArrayList params) {
+	protected JacksonRemotingCall(JacksonRemotingCallListener caller, String theClass, String method, ArrayList params) {
 		this.caller = caller;
 		this.theClass = theClass;
 		this.method = method;
@@ -156,7 +156,7 @@ public class JacksonRemotingCall extends AsyncTask {
 	 * @return
 	 * @throws IOException
 	 */
-	private Object downloadUrl(String myurl) throws IOException {
+	protected Object downloadUrl(String myurl) throws IOException {
 		InputStream is = null;
 		OutputStream out = null;
 		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>(3);

@@ -5,6 +5,7 @@
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,17 +13,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.xml.sax.SAXException;
 
 /**
  * Does not support passing of primitives as parameters to the methods that are
  * called
- * 
- * NOTE: classes called through this servlet should have a constructor that takes
- * a HttpServletRequest as a parameter
+ *
+ * NOTE: classes called through this servlet should have a constructor that
+ * takes a HttpServletRequest as a parameter
  *
  * @author Matt Roth
  */
@@ -31,6 +35,27 @@ public class JacksonGateway extends HttpServlet {
     private static final String SERVER_JAVABEAN_POJO_PACKAGE = "com.tsr.remoting.valueobjects";
     private static final String CLIENT_JAVABEAN_POJO_PACKAGE = "com.tsr.remoting.valueobjects";
     private static final String JAVABEAN_POJO_CLASS = "javabean_pojo_class";
+    private static final String JACKSON_CONFIG = "JACKSON_CONFIG";
+
+    @Override
+    public void init() throws ServletException {
+        try {
+            String configLocation = getServletConfig().getInitParameter(JACKSON_CONFIG);
+            System.out.println(configLocation);
+            InputStream inputStream = getServletContext().getResourceAsStream(configLocation);
+            ConfigDigester configDigester = new ConfigDigester();
+            configDigester.clear();
+            configDigester.push(this);
+            configDigester.parse(inputStream);
+        } catch (IOException | SAXException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void addCustomPackageMappingConfig(CustomPackageMappingConfig customPackageMappingConfig)
+    {
+        
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -91,7 +116,8 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts all JAVABEAN_POJOs in the obj down every level from LinkedHashMaps to JAVABEAN_POJOs
+     * Converts all JAVABEAN_POJOs in the obj down every level from
+     * LinkedHashMaps to JAVABEAN_POJOs
      *
      * @param obj
      * @return
@@ -129,11 +155,12 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts LinkedHashMaps to JAVABEAN_POJOs in the package SERVER_JAVABEAN_POJO_PACKAGE when they
-     * come for the client and have the key/value pair for JAVABEAN_POJO_CLASS
+     * Converts LinkedHashMaps to JAVABEAN_POJOs in the package
+     * SERVER_JAVABEAN_POJO_PACKAGE when they come for the client and have the
+     * key/value pair for JAVABEAN_POJO_CLASS
      *
-     * Checks the values to see if they might be of type Map,List or a JAVABEAN_POJO and
-     * then converts
+     * Checks the values to see if they might be of type Map,List or a
+     * JAVABEAN_POJO and then converts
      *
      * @param lhm
      * @return
@@ -187,8 +214,8 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Convert all JAVABEAN_POJOs all the way down every level to LinkedHashMaps with
-     * custom field to determine what JAVABEAN_POJO it is
+     * Convert all JAVABEAN_POJOs all the way down every level to LinkedHashMaps
+     * with custom field to determine what JAVABEAN_POJO it is
      *
      * @param obj
      * @return
@@ -228,8 +255,8 @@ public class JacksonGateway extends HttpServlet {
     }
 
     /**
-     * Converts JAVABEAN_POJOs to LinkedHashMaps before they go to the Android app and
-     * checks JAVABEAN_POJO values to see if they need to be converted
+     * Converts JAVABEAN_POJOs to LinkedHashMaps before they go to the Android
+     * app and checks JAVABEAN_POJO values to see if they need to be converted
      *
      * @param obj
      * @return
