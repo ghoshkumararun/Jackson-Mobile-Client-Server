@@ -30,35 +30,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * JacksonRemotingCallListener activity is the activity that is calling the
  * method, the activity must implement JacksonRemotingCallListener String theClass
  * is the Java class on the server side you wish to call, ex.
- * com.tsr.remoting.services.* String method is the method in theClass you wish
+ * com.example.RemotingService, String method is the method in theClass you wish
  * to use ArrayList params is a list of params to be sent over to the method
  * 
- * If the method that is called returns a VO you will need to cast the object
- * returned from onRemotingCallFinished to a LinkedHashMap and call the
- * LinkedHashMap constructor for the VO
+ * If the method that is called returns a JavaBean POJO you will need to cast the object
+ * returned from onRemotingCallFinished to the JavaBean POJO
  * 
- * ex. the java server method returns a ServiceResponseVO public void
- * onRemotingCallFinished(String theClass,String method, Object result) {
- * ServiceResponseVO sr = new ServiceResponseVO((LinkedHashMap)result);
+ * WARNING: This does not support parameter types of primitives
  * 
- * the constructor will be as follows for any of the VO's Iterator it =
- * lhm.entrySet().iterator(); while(it.hasNext()){ Entry pairs =
- * (Entry)it.next(); Class<?> c = this.getClass(); try { Field value =
- * c.getDeclaredField((String) pairs.getKey()); //Put any custom value
- * manipulation here value.set(this, pairs.getValue()); } catch (Exception e) {
- * e.printStackTrace(); } }
- * 
- * WARNING: This does not support parameter types of primitives NOTE:
- * JacksonRemotingCallListener.onRemotingCallFinished(String theClass,String
- * method,Object result) will have eTrakSession.remotingCallException() as
+ * NOTE: JacksonRemotingCallListener.onRemotingCallFinished(String theClass,String
+ * method,Object result) will have remotingCallException or remotingCallError as
  * theClass and the method if an error occurs while doing work in this method
+ * 
  * NOTE: If an error occurs on the Java server side
  * JacksonRemotingCallListener.onRemotingCallFinished(String theClass,String
  * method,Object result) will return the same theClass and method that was
- * originally used but the result will be the exception.toString() caused on in
+ * originally used but the result will be the exception.toString() caused in
  * the servlet
  * 
- * @author Carl
+ * @author Matt Roth
  * 
  */
 public class JacksonRemotingCall extends AsyncTask {

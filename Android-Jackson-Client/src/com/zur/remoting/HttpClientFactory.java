@@ -9,6 +9,9 @@ import org.apache.http.params.HttpParams;
 
 
 /**
+ * Credit for this class goes to Jason Hudgins 
+ * http://foo.jasonhudgins.com/2009/08/http-connection-reuse-in-android.html
+ * 
  * Keeps same session id by only creating a httpclient once
  * @author Matt Roth
  *
