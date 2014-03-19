@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <config>
     <custom-package-mapping>
-        <java-class>com.tsr.remoting.valueobjects</java-class>
-        <custom-class>com.tsr.remoting.valueobjects</custom-class>
+        <server-package>com.tsr.remoting.valueobjects</server-package>
+        <client-package>com.tsr.remoting.valueobjects</client-package>
     </custom-package-mapping>
 </config>

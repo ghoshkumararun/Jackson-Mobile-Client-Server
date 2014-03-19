@@ -11,30 +11,30 @@ package com.zur.java_jackson_servlet;
  */
 public class CustomPackageMappingConfig {
 
-    private String javaClassName;
-    private String customClassName;
-
-    public String getJavaClassName() {
-        return javaClassName;
-    }
-
-    public void setJavaClassName(String javaClassName) {
-        this.javaClassName = javaClassName;
-    }
-
-    public String getCustomClassName() {
-        return customClassName;
-    }
-
-    public void setCustomClassName(String customClassName) {
-        this.customClassName = customClassName;
-    }
+    private String serverPackageName;
+    private String clientPackageName;    
 
     @Override
     public String toString() {
-        return "javaClassName: "
-                + javaClassName
-                + "\ncustomClassName: "
-                + customClassName + "\n";
+        return "serverPackageName: "
+                + getServerPackageName()
+                + "\nclientPackageName: "
+                + getClientPackageName() + "\n";
+    }
+
+    public String getServerPackageName() {
+        return serverPackageName;
+    }
+
+    public void setServerPackageName(String serverPackageName) {
+        this.serverPackageName = serverPackageName;
+    }
+
+    public String getClientPackageName() {
+        return clientPackageName;
+    }
+
+    public void setClientPackageName(String clientPackageName) {
+        this.clientPackageName = clientPackageName;
     }
 }
