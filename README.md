@@ -21,7 +21,7 @@ You will need for Android Client
   
 Download from https://hc.apache.org/downloads.cgi
 
-###### Planned updates
+###### To do
 * Put Java servlet in a library with a xml config file
 * Test Java servlet in working webapp
 * Test Android client in workign webapp
