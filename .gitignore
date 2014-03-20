@@ -213,3 +213,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+Android-Jackson-Client/gen/com/zur/android_jackson_client/BuildConfig.java
