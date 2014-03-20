@@ -79,18 +79,13 @@ public class JacksonRemotingCall extends AsyncTask {
 
 			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 			if (networkInfo != null && networkInfo.isConnected()) {
-				new JacksonRemotingCall(caller, theClass, method, params).execute(urlForGateway(), method, params);
+				new JacksonRemotingCall(caller, theClass, method, params).execute(caller.urlForGateway(), method, params);
 			} else {
 				caller.onRemotingCallFinished(remotingCallException, remotingCallException, NETWORK_INFO_ERROR);
 			} 
 		} else {
 			throw new NullPointerException(remotingCallerNull + ":" + CALLER_NULL_ERROR);
 		}
-	}
-
-	protected static String urlForGateway()
-	{
-		return "";
 	}
 
 	// Error messages

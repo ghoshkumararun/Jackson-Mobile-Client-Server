@@ -9,4 +9,5 @@ public interface JacksonRemotingCallListener {
 
 	public void onRemotingCallFinished(String theClass, String method, Object result);
 	public abstract Object getSystemService (String name);
+	public String urlForGateway();
 }
