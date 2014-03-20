@@ -10,4 +10,3 @@ It handles JavaBean POJOs and will go into Maps and Lists and convert JavaBean P
 ###### To do
 * Put Java servlet in a library with a xml config file
 * Test Java servlet in working webapp
-* Test Android client in workign webapp
