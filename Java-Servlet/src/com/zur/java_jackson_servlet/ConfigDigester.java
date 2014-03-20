@@ -48,12 +48,12 @@ public class ConfigDigester extends Digester {
             "addCustomPackageMappingConfig",
             "CustomPackageMappingConfig");
         addCallMethod(
-            CUSTOM_PACKAGE_MAPPING_PATH + "/java-class",
-            "setJavaClassName",
+            CUSTOM_PACKAGE_MAPPING_PATH + "/server-package",
+            "setServerPackageName",
             0);
         addCallMethod(
-            CUSTOM_PACKAGE_MAPPING_PATH + "/custom-class",
-            "setCustomClassName",
+            CUSTOM_PACKAGE_MAPPING_PATH + "/client-package",
+            "setClientPackageName",
             0);
     }
 }

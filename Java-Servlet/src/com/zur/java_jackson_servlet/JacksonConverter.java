@@ -38,7 +38,7 @@ public class JacksonConverter {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public Object unparseObjectFromJSON(Object obj) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public Object unparseObjectFromJackson(Object obj) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         if (obj != null) {
             if (obj instanceof LinkedHashMap && ((LinkedHashMap) obj).get(JAVABEAN_POJO_CLASS) != null) {
@@ -49,7 +49,7 @@ public class JacksonConverter {
 
                 List list = (List) obj;
                 for (int x = 0; x < list.size(); x++) {
-                    list.set(x, unparseObjectFromJSON(list.get(x)));
+                    list.set(x, unparseObjectFromJackson(list.get(x)));
                 }
                 return list;
 
@@ -59,7 +59,7 @@ public class JacksonConverter {
                 Iterator entries = map.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry e = (Map.Entry) entries.next();
-                    map.put(e.getKey(), unparseObjectFromJSON(e.getValue()));
+                    map.put(e.getKey(), unparseObjectFromJackson(e.getValue()));
                 }
                 return map;
             }
@@ -98,7 +98,7 @@ public class JacksonConverter {
 
                         if (fieldValue != null) {
 
-                            fieldValue = unparseObjectFromJSON(fieldValue);
+                            fieldValue = unparseObjectFromJackson(fieldValue);
 
                             setterArgTypes[0] = fieldValue.getClass();
 
@@ -133,7 +133,7 @@ public class JacksonConverter {
      * @param obj
      * @return
      */
-    public Object parseObjectForJSON(Object obj) {
+    public Object parseObjectForJackson(Object obj) {
         if (obj != null) {
             boolean isJavaBeanPojo = Package.getPackage(SERVER_JAVABEAN_POJO_PACKAGE).equals(obj.getClass().getPackage());
 
@@ -145,7 +145,7 @@ public class JacksonConverter {
 
                 List list = (List) obj;
                 for (int x = 0; x < list.size(); x++) {
-                    list.set(x, parseObjectForJSON(list.get(x)));
+                    list.set(x, parseObjectForJackson(list.get(x)));
                 }
                 return list;
 
@@ -155,7 +155,7 @@ public class JacksonConverter {
                 Iterator entries = map.entrySet().iterator();
                 while (entries.hasNext()) {
                     Map.Entry e = (Map.Entry) entries.next();
-                    map.put(e.getKey(), parseObjectForJSON(e.getValue()));
+                    map.put(e.getKey(), parseObjectForJackson(e.getValue()));
                 }
                 return map;
 
@@ -189,7 +189,7 @@ public class JacksonConverter {
                         Class c = obj.getClass();
                         Method m = c.getDeclaredMethod(getter, (Class[]) null);
                         Object o = m.invoke(obj, (Object[]) null);
-                        lhm.put(theField.getName(), parseObjectForJSON(o));
+                        lhm.put(theField.getName(), parseObjectForJackson(o));
 
                     } catch (Exception e) {
                         e.printStackTrace();

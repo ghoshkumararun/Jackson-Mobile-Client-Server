@@ -66,7 +66,7 @@ public class JacksonGateway extends HttpServlet {
 
             for (int x = 0; x < params.size(); x++) {
 
-                Object obj = converter.unparseObjectFromJSON(params.get(x));
+                Object obj = converter.unparseObjectFromJackson(params.get(x));
 
                 argTypes[x] = obj.getClass();
                 args[x] = obj;
@@ -74,7 +74,7 @@ public class JacksonGateway extends HttpServlet {
             }
             Method main = c.getDeclaredMethod(method, argTypes);
             Object obj = main.invoke(t, args);
-            String json = mapper.writeValueAsString(converter.parseObjectForJSON(obj));
+            String json = mapper.writeValueAsString(converter.parseObjectForJackson(obj));
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
