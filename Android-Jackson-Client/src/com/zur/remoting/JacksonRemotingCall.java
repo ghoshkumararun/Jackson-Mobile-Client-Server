@@ -66,6 +66,15 @@ public class JacksonRemotingCall extends AsyncTask {
 	 * method = "printInputXNumOfTimes"
 	 * params = {"hello",2}
 	 * 
+	 * If there is networkInfo is null or network is not connected will do
+	 * 	caller.onRemotingCallFinished("REMOTINGCALLEXCEPTION","REMOTINGCALLEXCEPTION","NetworkInfo is either null or connectivity doesn't exist.")
+	 * 
+	 * If there is an exception during communication with server will do
+	 * 	caller.onRemotingCallFinished("REMOTINGCALLEXCEPTION","REMOTINGCALLEXCEPTION",exception.toString())
+	 * 
+	 * If there is an error during communication with server will do
+	 * 	caller.onRemotingCallFinished("REMOTINGCALLERROR","REMOTINGCALLERROR",error.toString())
+	 * 
 	 * @param activity
 	 * @param theClass
 	 * @param method
