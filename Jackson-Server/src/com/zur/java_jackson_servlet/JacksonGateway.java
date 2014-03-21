@@ -31,8 +31,9 @@ public class JacksonGateway extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-        loadConfig();
-        converter = new JacksonConverter();
+//        loadConfig();
+//        converter = new JacksonConverter();
+        System.out.println("TEST");
     }
 
     /**

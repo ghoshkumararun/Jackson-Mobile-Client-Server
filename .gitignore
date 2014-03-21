@@ -214,3 +214,9 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 Android-Jackson-Client/gen/com/zur/android_jackson_client/BuildConfig.java
+/nbproject/private/
+/Java-Servlet/nbproject/private/
+/Jackson-Server/nbproject/private/
+/ZurWebApp/nbproject/private/
+/JacksonWebApp/nbproject/private/
+/Jackson-WebApp/nbproject/private/
