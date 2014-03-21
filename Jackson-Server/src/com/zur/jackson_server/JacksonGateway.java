@@ -1,4 +1,4 @@
-package com.zur.java_jackson_servlet;
+package com.zur.jackson_server;
 
 /*
  * To change this template, choose Tools | Templates

@@ -1,4 +1,4 @@
-package com.zur.java_jackson_servlet;
+package com.zur.jackson_server;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

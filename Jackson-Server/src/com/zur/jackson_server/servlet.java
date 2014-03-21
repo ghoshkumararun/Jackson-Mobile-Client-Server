@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.zur.java_jackson_servlet;
+package com.zur.jackson_server;
 
 /**
  *
